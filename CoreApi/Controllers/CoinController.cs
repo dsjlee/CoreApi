@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CoreApi.Controllers
 {
     [Route("api/[controller]")]
-    [EnableCors("AllowLocalhost")]
+    [EnableCors("AllowedOrigins")]
     [ApiController]
     public class CoinController : ControllerBase
     {

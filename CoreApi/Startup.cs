@@ -38,7 +38,7 @@ namespace CoreApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowLocalhost",
+                options.AddPolicy("AllowedOrigins",
                     builder => builder
                     .WithOrigins("http://localhost:4200", "https://dsjlee.bitbucket.io", "https://dsjlee.github.io")
                     //.AllowAnyOrigin()
