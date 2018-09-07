@@ -9,6 +9,8 @@ This is necessary to overcome the following limitation imposed by CMC:
 
 The application exposes two endpoints and caches data in memory for 5min (which is Coinmarketcap's update frequency).
 
+Demo of running application: http://netfour.apphb.com/api/coin
+
 ## Instruction
 Sign up to get API key from https://pro.coinmarketcap.com/
 
