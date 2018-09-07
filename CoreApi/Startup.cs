@@ -33,7 +33,7 @@ namespace CoreApi
                 client.BaseAddress = new Uri("https://pro-api.coinmarketcap.com/"); // can't change once it's set
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "");
+                client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", Configuration["CoinmarketcapApiKey"]);
             });
 
             services.AddCors(options =>
