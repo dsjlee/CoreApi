@@ -90,6 +90,13 @@ namespace CoreApi.Controllers
 
         //}
 
+        [Route("~/api/keepalive")]
+        [HttpGet]
+        public IActionResult KeepAlive()
+        {
+            return new OkObjectResult("Ok");
+        }
+
         // GET: api/Coin/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
