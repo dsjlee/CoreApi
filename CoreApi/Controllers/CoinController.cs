@@ -41,7 +41,7 @@ namespace CoreApi.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     cacheEntry = await response.Content.ReadAsStringAsync();
-                    CacheInMemory(cacheKey, cacheEntry);
+                    CacheInMemory(cacheKey, cacheEntry, 1);
                 }
                 isCoinListCaching = false;
             }
@@ -61,12 +61,12 @@ namespace CoreApi.Controllers
                 // Key not in cache, so get data.
                 isGlobalMetricsCaching = true;
                 var client = _clientFactory.CreateClient("CoinMarketCap"); // Startup.cs -> ConfigureServices
-                HttpResponseMessage response = await client.GetAsync("v1/global-metrics/quotes/latest ");
+                HttpResponseMessage response = await client.GetAsync("v1/global-metrics/quotes/latest");
 
                 if (response.IsSuccessStatusCode)
                 {
                     cacheEntry = await response.Content.ReadAsStringAsync();
-                    CacheInMemory(cacheKey, cacheEntry);
+                    CacheInMemory(cacheKey, cacheEntry, 5);
                 }
                 isGlobalMetricsCaching = false;
             }
@@ -75,7 +75,7 @@ namespace CoreApi.Controllers
         }
 
         [NonAction]
-        private void CacheInMemory(string cacheKey, string cacheEntry)
+        private void CacheInMemory(string cacheKey, string cacheEntry, int expireMinute)
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                         .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
