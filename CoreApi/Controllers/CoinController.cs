@@ -41,7 +41,7 @@ namespace CoreApi.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     cacheEntry = await response.Content.ReadAsStringAsync();
-                    CacheInMemory(cacheKey, cacheEntry, 1);
+                    CacheInMemory(cacheKey, cacheEntry, 5);
                 }
                 isCoinListCaching = false;
             }
@@ -78,17 +78,17 @@ namespace CoreApi.Controllers
         private void CacheInMemory(string cacheKey, string cacheEntry, int expireMinute)
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions()
-                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-            //.RegisterPostEvictionCallback(callback: EvictionCallback, state: this);
+                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(expireMinute));
+                        //.RegisterPostEvictionCallback(callback: EvictionCallback, state: this);
             _cache.Set(cacheKey, cacheEntry, cacheEntryOptions);
-            System.Diagnostics.Debug.WriteLine($"Cached {cacheKey}: {DateTime.Now}");
+            //System.Diagnostics.Debug.WriteLine($"Cached {cacheKey}: {DateTime.Now}");
         }
 
-        //[NonAction]
-        //private static void EvictionCallback(object key, object value, EvictionReason reason, object state)
-        //{
-
-        //}
+        [NonAction]
+        private static void EvictionCallback(object key, object value, EvictionReason reason, object state)
+        {
+            System.Diagnostics.Debug.WriteLine("EvictionCallback");
+        }
 
         [Route("~/api/keepalive")]
         [HttpGet]
