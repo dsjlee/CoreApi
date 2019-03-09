@@ -11,7 +11,7 @@ namespace CoreApi.Controllers
     [Route("api/[controller]")]
     [EnableCors("AllowedOrigins")]
     [ApiController]
-    public class CoinController : ControllerBase
+    public class CoinController : Controller
     {
         private readonly IMemoryCache _cache;
         private readonly IHttpClientFactory _clientFactory;
@@ -26,7 +26,7 @@ namespace CoreApi.Controllers
 
         // GET: api/Coin
         [HttpGet]
-        public async Task<string> Get()
+        public async Task<IActionResult> Get()
         {
             var cacheKey = "CoinList";
 
@@ -46,12 +46,12 @@ namespace CoreApi.Controllers
                 isCoinListCaching = false;
             }
             
-            return cacheEntry;
+            return Json(cacheEntry);
         }
 
         [Route("~/api/[controller]/metrics")]
         [HttpGet]
-        public async Task<string> Metrics()
+        public async Task<ContentResult> Metrics()
         {
             var cacheKey = "GlobalMetrics";
 
@@ -71,7 +71,7 @@ namespace CoreApi.Controllers
                 isGlobalMetricsCaching = false;
             }
 
-            return cacheEntry;
+            return Content(cacheEntry);
         }
 
         [NonAction]
